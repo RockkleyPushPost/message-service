@@ -27,7 +27,9 @@ func (dto *CreateMessageDTO) Validate() error {
 
 		return errors.New("invalid receiver uuid")
 	}
+
 	contentLength := utf8.RuneCountInString(dto.Content)
+
 	if contentLength < MinContentLength || contentLength > MaxContentLength {
 
 		return errors.New("invalid content length")

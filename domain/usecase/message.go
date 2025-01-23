@@ -17,30 +17,16 @@ type MessageUseCase struct {
 
 func (uc *MessageUseCase) CreateMessage(dto *dto.CreateMessageDTO) (err error) {
 	if err = dto.Validate(); err != nil {
+
 		return
 	}
 
-	message := entity.Message{
-		UUID:         uuid.New(),
-		SenderUUID:   dto.SenderUUID,
-		ReceiverUUID: dto.ReceiverUUID,
-		Content:      dto.Content,
-	}
-	if err = uc.MessageRepo.CreateMessage(&message); err != nil {
+	message := entity.NewMessage(*dto)
 
-		return err
-	}
-
-	return
+	return uc.MessageRepo.CreateMessage(message)
 }
 
 func (uc *MessageUseCase) GetMessagesByUserUUID(uuid uuid.UUID) (messages []entity.Message, err error) {
-	messages, err = uc.MessageRepo.GetMessagesByUserUUID(uuid)
 
-	if err != nil {
-
-		return
-	}
-
-	return
+	return uc.MessageRepo.GetMessagesByUserUUID(uuid)
 }

@@ -5,14 +5,13 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"pushpost/internal/services/message_service/entity"
-	"pushpost/internal/services/user_service/entity"
 )
 
 type MessageRepository struct {
 	DB *gorm.DB
 }
 
-func (r *MessageRepository) CreateMessage(message *entity.Message) error {
+func (r *MessageRepository) CreateMessage(message *entity.Message) error { // FIXME WTF
 	if r.DB.Find(&entity.User{}, "uuid = ?", message.ReceiverUUID).Error != nil {
 
 		return errors.New("receiver not found")

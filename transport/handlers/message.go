@@ -3,31 +3,32 @@ package transport
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"pushpost/internal/services/message_service/domain"
 	"pushpost/internal/services/message_service/domain/dto"
 	"pushpost/internal/services/message_service/domain/usecase"
 	"pushpost/internal/services/message_service/entity"
 )
 
 type MessagesHandler struct {
-	useCase usecase.MessageUseCase
+	useCase domain.MessageUseCase
 }
 
 func NewMessagesHandler(useCase usecase.MessageUseCase) *MessagesHandler {
-	return &MessagesHandler{useCase: useCase}
+	return &MessagesHandler{useCase: &useCase}
 }
 
 func (h *MessagesHandler) CreateMessage(c *fiber.Ctx) error {
-	var data entity.Message
+	var body entity.Message
 
-	if err := c.BodyParser(&data); err != nil {
+	if err := c.BodyParser(&body); err != nil {
 
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 	}
 
 	params := dto.CreateMessageDTO{
-		SenderUUID:   data.SenderUUID,
-		ReceiverUUID: data.ReceiverUUID,
-		Content:      data.Content,
+		SenderUUID:   body.SenderUUID,
+		ReceiverUUID: body.ReceiverUUID,
+		Content:      body.Content,
 	}
 
 	if err := params.Validate(); err != nil {
