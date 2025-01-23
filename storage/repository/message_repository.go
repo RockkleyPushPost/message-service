@@ -5,7 +5,7 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"pushpost/internal/services/message_service/entity"
-	entity2 "pushpost/internal/services/user_service/entity"
+	"pushpost/internal/services/user_service/entity"
 )
 
 type MessageRepository struct {
@@ -13,12 +13,12 @@ type MessageRepository struct {
 }
 
 func (r *MessageRepository) CreateMessage(message *entity.Message) error {
-	if r.DB.Find(&entity2.User{}, "uuid = ?", message.ReceiverUUID).Error != nil {
+	if r.DB.Find(&entity.User{}, "uuid = ?", message.ReceiverUUID).Error != nil {
 
 		return errors.New("receiver not found")
 	}
 
-	if r.DB.Find(&entity2.User{}, "uuid = ?", message.SenderUUID).Error != nil {
+	if r.DB.Find(&entity.User{}, "uuid = ?", message.SenderUUID).Error != nil {
 
 		return errors.New("sender not found")
 	}
