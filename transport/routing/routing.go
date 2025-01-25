@@ -10,7 +10,10 @@ func SetupRoutes(app *fiber.App, container di.Container) {
 	jwtSecret := "shenanigans"
 	messageHandlers := app.Group("/message", middleware.AuthJWTMiddleware(jwtSecret))
 
-	messageHandlers.Post("/create", container.MessageHandler.CreateMessage)
+	// GET
 	messageHandlers.Get("/getByUuid", container.MessageHandler.GetMessagesByUserUUID)
+
+	// POST
+	messageHandlers.Post("/create", container.MessageHandler.CreateMessage)
 
 }

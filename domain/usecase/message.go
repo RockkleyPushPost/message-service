@@ -16,11 +16,6 @@ type MessageUseCase struct {
 }
 
 func (uc *MessageUseCase) CreateMessage(dto *dto.CreateMessageDTO) (err error) {
-	if err = dto.Validate(); err != nil {
-
-		return
-	}
-
 	message := entity.NewMessage(*dto)
 
 	return uc.MessageRepo.CreateMessage(message)
