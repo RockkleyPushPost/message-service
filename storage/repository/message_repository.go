@@ -11,13 +11,17 @@ type MessageRepository struct {
 	DB *gorm.DB
 }
 
+func NewMessageRepository(DB *gorm.DB) *MessageRepository {
+	return &MessageRepository{DB: DB}
+}
+
 func (r *MessageRepository) CreateMessage(message *entity.Message) error { // FIXME WTF
-	if r.DB.Find(&entity.User{}, "uuid = ?", message.ReceiverUUID).Error != nil {
+	if r.DB.Find(&entity.Message{}, "uuid = ?", message.ReceiverUUID).Error != nil {
 
 		return errors.New("receiver not found")
 	}
 
-	if r.DB.Find(&entity.User{}, "uuid = ?", message.SenderUUID).Error != nil {
+	if r.DB.Find(&entity.Message{}, "uuid = ?", message.SenderUUID).Error != nil {
 
 		return errors.New("sender not found")
 	}

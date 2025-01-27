@@ -15,6 +15,10 @@ type MessageUseCase struct {
 	MessageRepo storage.MessageRepository
 }
 
+func NewMessageUseCase(messageRepo storage.MessageRepository) *MessageUseCase {
+	return &MessageUseCase{MessageRepo: messageRepo}
+}
+
 func (uc *MessageUseCase) CreateMessage(dto *dto.CreateMessageDTO) (err error) {
 	message := entity.NewMessage(*dto)
 

@@ -1,19 +1,18 @@
 package routing
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"pushpost/internal/di"
+	"pushpost/internal/services/message_service/transport"
 	"pushpost/pkg/middleware"
 )
 
-func SetupRoutes(app *fiber.App, container di.Container) {
+func SetupRoutes(handler transport.MessageHandler) {
 	jwtSecret := "shenanigans"
-	messageHandlers := app.Group("/message", middleware.AuthJWTMiddleware(jwtSecret))
+	messageHandlers := handler.App().Group("/message", middleware.AuthJWTMiddleware(jwtSecret))
 
 	// GET
-	messageHandlers.Get("/getByUuid", container.MessageHandler.GetMessagesByUserUUID)
+	messageHandlers.Get("/getByUuid", handler.GetMessagesByUserUUID)
 
 	// POST
-	messageHandlers.Post("/create", container.MessageHandler.CreateMessage)
+	messageHandlers.Post("/create", handler.CreateMessage)
 
 }
