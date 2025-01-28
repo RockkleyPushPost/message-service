@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/signal"
 	"pushpost/internal/config"
-	"pushpost/internal/services/message_service/entity"
 	"pushpost/internal/services/message_service/service"
 	"pushpost/internal/services/message_service/service/di"
 	"syscall"
@@ -43,7 +42,7 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-	container.DB.AutoMigrate(entity.Message{}) //fixme make goose migrations
+	//container.DB.AutoMigrate(entity.Message{}) //fixme make goose migrations
 
 	go handleShutdown(ctx, cancel, srv, logger)
 

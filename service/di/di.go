@@ -20,6 +20,7 @@ func Setup(cfg config.Config, di *Container) error {
 	}
 
 	fiber := setup.NewFiber()
+
 	di.Server = fiber
 	var messageRepository storage.MessageRepository = repository.NewMessageRepository(db)
 	var messageUseCase domain.MessageUseCase = usecase.NewMessageUseCase(messageRepository)

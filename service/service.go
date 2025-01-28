@@ -61,7 +61,7 @@ func (s *service) validate() error {
 func (s *service) Run(ctx context.Context) error {
 	s.logger.Printf("starting %s\n", s.Name())
 
-	err := s.container.Server.Listen(":3001") //fixme gotta parse
+	err := s.container.Server.Listen(":3003") //fixme gotta parse
 	if err != nil {
 		return err
 	}
@@ -71,6 +71,10 @@ func (s *service) Run(ctx context.Context) error {
 
 func (s *service) Shutdown(ctx context.Context) error {
 	s.logger.Printf("shutting down %s...\n", servName)
+	err := s.container.Server.Shutdown()
+	if err != nil {
+		return err
+	}
 	// todo
 	return nil
 }
