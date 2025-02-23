@@ -6,7 +6,7 @@ import (
 )
 
 func SetupRoutes(handler transport.MessageHandler) {
-	jwtSecret := "bullsonparade"
+	jwtSecret := "pushpost"
 	messageHandlers := handler.App().Group("/message", middleware.AuthJWTMiddleware(jwtSecret))
 
 	// GET
