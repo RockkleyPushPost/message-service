@@ -17,7 +17,7 @@ func main() {
 
 	logger := initLogger()
 
-	cfg, err := config.LoadYamlConfig("configs/development.yaml")
+	cfg, err := config.LoadYamlConfig(os.Getenv("CONFIG_PATH"))
 
 	if err != nil {
 		logger.Fatal(err)
